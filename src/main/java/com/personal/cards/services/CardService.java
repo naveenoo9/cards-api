@@ -11,5 +11,5 @@ public interface CardService {
 
   Card getCardById(Long cardId);
 
-  Card getCardByNumber(String cardNumber);
+  // Card getCardByNumber(String cardNumber);
 }

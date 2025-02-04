@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 
 import com.personal.cards.entities.Card;
 import com.personal.cards.exceptions.CardDetailsException;
-import com.personal.cards.repo.CardRepo;
+import com.personal.cards.repo.CardsRepository;
 import com.personal.cards.services.CardService;
 
 @Service
 public class CardServiceImpl implements CardService {
 
   @Autowired
-  private CardRepo cardRepo;
+  private CardsRepository cardRepo;
   private static final Logger log = LoggerFactory.getLogger(CardServiceImpl.class);
 
   @Override
@@ -49,13 +49,13 @@ public class CardServiceImpl implements CardService {
     return optional.get();
   }
 
-  @Override
-  public Card getCardByNumber(String cardNumber) {
-    log.info("Fetching card for ", cardNumber);
-    Optional<Card> optional = cardRepo.findByCardNumber(cardNumber);
-    if (optional.isEmpty())
-      throw new CardDetailsException("No Card found for: " + cardNumber);
-    return optional.get();
-  }
+  // @Override
+  // public Card getCardByNumber(String cardNumber) {
+  //   log.info("Fetching card for ", cardNumber);
+  //   Optional<Card> optional = cardRepo.findByCardNumber(cardNumber);
+  //   if (optional.isEmpty())
+  //     throw new CardDetailsException("No Card found for: " + cardNumber);
+  //   return optional.get();
+  // }
   
 }
