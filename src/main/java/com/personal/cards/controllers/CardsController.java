@@ -40,8 +40,8 @@ public class CardsController {
     return ResponseEntity.status(HttpStatus.CREATED).body(savedCard);
   }
 
-  @GetMapping(path = "/card/{cardNumber}")
-  public ResponseEntity<Card> fetchCardByCardNumber(@PathVariable String cardNumber) {
-    return ResponseEntity.ok().body(cardService.getCardByNumber(cardNumber));
-  }
+  // @GetMapping(path = "/card/{cardNumber}")
+  // public ResponseEntity<Card> fetchCardByCardNumber(@PathVariable String cardNumber) {
+  //   return ResponseEntity.ok().body(cardService.getCardByNumber(cardNumber));
+  // }
 }
