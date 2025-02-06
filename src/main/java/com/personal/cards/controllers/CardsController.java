@@ -17,6 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.personal.cards.entities.Card;
 import com.personal.cards.services.CardService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping(path="/cards/v1")
 public class CardsController {
@@ -30,6 +36,14 @@ public class CardsController {
   }
 
   @GetMapping
+  @Operation(description = "List all Cards")
+  @ApiResponses(value = {
+  @ApiResponse(responseCode="200",  description = "Retrieve a list of cards",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Card.class))),
+    @ApiResponse(responseCode = "404", description = "No Cards found"),
+    @ApiResponse(responseCode = "400", description = "Invalid input"),
+    @ApiResponse(responseCode = "500", description = "Server Error")
+  })
   public ResponseEntity<List<Card>> fetchAllCards() {
     return ResponseEntity.ok().body(cardService.getAllCards());
   }

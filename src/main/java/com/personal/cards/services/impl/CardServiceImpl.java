@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.personal.cards.entities.Card;
-import com.personal.cards.exceptions.CardDetailsException;
+import com.personal.cards.exceptions.InvalidCardException;
+import com.personal.cards.exceptions.UnrecoverableCardException;
 import com.personal.cards.repo.CardsRepository;
 import com.personal.cards.services.CardService;
 
@@ -24,7 +25,7 @@ public class CardServiceImpl implements CardService {
   public Card addNewCard(Card newCard) {
     log.info("Adding new Card ", newCard);
     if (newCard == null) 
-      throw new CardDetailsException("Card details cannot be empty");
+      throw new InvalidCardException("Card details cannot be empty", 400);
     Card savedCard = cardRepo.save(newCard);
     log.info("Added Card", savedCard);
     return savedCard;
@@ -34,9 +35,9 @@ public class CardServiceImpl implements CardService {
   public List<Card> getAllCards() {
     log.info("Fetching all Cards");
     List<Card> cards = cardRepo.findAll();
-    if (cards.size() == 0)
-      throw new CardDetailsException("Found 0 cards");
-    log.info("Found {} cards", cards.size());
+    if (cards.size() == 0) {
+      throw new UnrecoverableCardException("Found 0 cards", 404);
+    }
     return cards;
   }
 
@@ -45,7 +46,7 @@ public class CardServiceImpl implements CardService {
     log.info("Fetch Card with ID: ", cardId);
     Optional<Card> optional = cardRepo.findById(cardId);
     if (optional.isEmpty())
-      throw new CardDetailsException("No Card found with ID: " + cardId);
+      throw new UnrecoverableCardException("No Card found with ID: " + cardId, 404);
     return optional.get();
   }
 
